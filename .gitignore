@@ -1,3 +1,6 @@
+# ignore local token file
+token.json
+
 # ignore frontend source map files
 frontend/dist/**/*.map
 
