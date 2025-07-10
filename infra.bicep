@@ -8,7 +8,10 @@ param linuxFxVersion string = 'node|22-lts'
 resource plan 'Microsoft.Web/serverfarms@2022-03-01' = {
   name: '${webAppName}-plan'
   location: location
-  sku: { name: skuName }
+  sku: { tier: 'Free', name: skuName }
+  properties: {
+    reserved: true // Indicates this is a Linux plan
+  }
   kind: 'linux'
 }
 

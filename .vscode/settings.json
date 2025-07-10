@@ -1,6 +1,6 @@
 {
 	"codingTracker.serverURL": "http://localhost:10345/",
-	"codingTracker.uploadToken": "123456",
+	"codingTracker.uploadToken": "",
 	"codingTracker.computerId": "ubuntuLaptop",
 
 	"files.exclude": {
