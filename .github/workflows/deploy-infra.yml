@@ -5,7 +5,7 @@ on:
       appName:
         description: 'Azure Web App Name'
         required: true
-        default: 'vscode-coding-tracker'
+        default: 'app-vscode-coding-tracker'
       uploadToken:
         description: 'Upload Token for the server'
         required: true

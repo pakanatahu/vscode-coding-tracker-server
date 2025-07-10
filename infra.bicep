@@ -19,7 +19,6 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
     serverFarmId: plan.id
     siteConfig: {
       linuxFxVersion: 'NODE|22-lts'
-      appCommandLine: 'node app.js -t $UPLOAD_TOKEN'
       appSettings: [
         { name: 'UPLOAD_TOKEN', value: uploadToken }
       ]

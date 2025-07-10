@@ -1,7 +1,15 @@
 name: Deploy Coding Tracker Server
 on:
-  push:
-    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      appName:
+        description: 'Azure Web App Name'
+        required: true
+        default: 'app-vscode-coding-tracker'
+      uploadToken:
+        description: 'Upload Token for the server'
+        required: true
+        default: ''
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
