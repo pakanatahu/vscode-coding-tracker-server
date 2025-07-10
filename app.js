@@ -124,9 +124,10 @@ errorHandler.setup(app);
 //If output folder is not exists then mkdirs
 Fs.existsSync(cliArgs.output) || Fs.mkdirsSync(cliArgs.output);
 //Launch express web server
+const port = process.env.PORT || cliArgs.port;
 cliArgs.local ?
-	app.listen(cliArgs.port, '127.0.0.1', afterServerStarted) :
-	app.listen(cliArgs.port, afterServerStarted);
+	app.listen(port, '127.0.0.1', afterServerStarted) :
+	app.listen(port, afterServerStarted);
 
 
 function returnError(res, errInfo) { res.json({ error: errInfo || 'Unknown error' }).end() }
