@@ -29,16 +29,15 @@ function runningInProjectRoot() {
 
 //>>>>>>>>>>>>>>>>>>>> Main Function
 
-function main(then) {
+async function main(then) {
 	this.slow(TEST_SLOW_TIME);
 	this.timeout(TEST_TIMEOUT_TIME);
 
-	let ESLint = require('eslint');
-	//@ts-ignore
-	let eslint = new ESLint.CLIEngine({ useEslintrc: true });
+	const { ESLint } = require('eslint');
+	const eslint = new ESLint({ useEslintrc: true });
 
 	/** @type {ESLintResultItem[]} */
-	let results = eslint.executeOnFiles(FILES).results;
+	let results = (await eslint.lintFiles(FILES)).results;
 	// filter: get warning/error file
 	results = results.filter(item => item.messages.length);
 

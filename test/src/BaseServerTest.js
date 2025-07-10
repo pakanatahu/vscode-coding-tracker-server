@@ -7,7 +7,7 @@ let killAll = require('tree-kill'),
 	serverLog = require('./utils/LogFile').createLogFile('server-stdout-stderr'),
 	{ deprecatedhttpGet, deprecatedhttpPost } = Http;
 
-const PORT = 24680,
+const PORT = 24681,
 	TOKEN = 'token123456',
 	TEST_BASE_URL = `http://127.0.0.1:${PORT}`,
 	DATABASE_FOLDER = `${__dirname}/../resources/data-simple`;

@@ -1,0 +1,34 @@
+name: Deploy Azure Infrastructure
+on:
+  workflow_dispatch:
+    inputs:
+      appName:
+        description: 'Azure Web App Name'
+        required: true
+        default: 'vscode-coding-tracker'
+      uploadToken:
+        description: 'Upload Token for the server'
+        required: true
+        default: ''
+
+jobs:
+  deploy-infrastructure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy Bicep
+        uses: azure/cli@v1
+        with:
+          inlineScript: |
+            az deployment group create \
+              --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
+              --template-file infra.bicep \
+              --parameters appName=${{ github.event.inputs.appName }} uploadToken=${{ github.event.inputs.uploadToken }}
+        env:
+          AZURE_CLI_DEBUG: true

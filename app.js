@@ -65,7 +65,7 @@ app.use('/report-new', Express.static(`${__dirname}/frontend/dist`));
 
 //Display now is debug mode
 //@ts-ignore
-if (global.DEBUG) {
+if (cliArgs.debug) {
 	log.info('Debug mode be turned on!');
 	//Using visitor log record (if under the debug mode)
 	app.use(require('morgan')('dev'));
