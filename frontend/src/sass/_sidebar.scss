@@ -1,4 +1,4 @@
-@import '_color.scss';
+@use './_color.scss' as colors;
 
 .layout-sidebar {
 	$sidebar-bg: #F9FAFC;
@@ -41,8 +41,8 @@
 
 		.dropdown-item.active,
 		.dropdown-item:active {
-			background-color: $primary-color !important;
-			color: $primary-color-text !important;
+			background-color: colors.$primary-color !important;
+			color: colors.$primary-color-text !important;
 		}
 	}
 
@@ -62,7 +62,7 @@
 			&.active {
 				background-color: $sidebar-bg-active !important;
 				color: $sidebar-color-active !important;
-				border-left: 5px solid $primary-color-dark;
+				border-left: 5px solid colors.$primary-color-dark;
 			}
 			&:hover {
 				color: $sidebar-color-active !important;
@@ -71,11 +71,11 @@
 			.ion { margin-right:  10px; }
 
 			&.btn-new-report-ui {
-				color: $primary-color-dark !important;
-				text-shadow: 0 0 8px $primary-color-light;
+				color: colors.$primary-color-dark !important;
+				text-shadow: 0 0 8px colors.$primary-color-light;
 
 				&:hover {
-					color: $primary-color !important;
+					color: colors.$primary-color !important;
 				}
 			}
 		}

@@ -1,6 +1,8 @@
 
+@use './_color.scss' as colors;
+
 #toggleSidebarNav {
-	color: $primary-color-text;
+	color: colors.$primary-color-text;
 	font-size: 1.5rem;
 	cursor: pointer;
 }
@@ -20,7 +22,7 @@
 		width: auto;
 		
 		@media (max-width: 767px) {
-			background-color: $primary-color;
+			background-color: colors.$primary-color;
 
 			padding: .5rem 1rem;
 			width: 100%;
@@ -32,7 +34,7 @@
 	}
 
 	.dropdown-item.active {
-		background-color: $primary-color !important;
-		color: $primary-color-text !important;
+		background-color: colors.$primary-color !important;
+		color: colors.$primary-color-text !important;
 	}
 }

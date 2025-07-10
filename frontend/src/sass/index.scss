@@ -1,10 +1,10 @@
-@import './_size.scss';
-@import './_color.scss';
+@use './_size.scss' as size;
+@use './_color.scss' as colors;
 
-@import './_top_navbar.scss';
-@import './_sidebar.scss';
-@import './_dialog_custom_range.scss';
-@import './_dialog_24hs_from.scss';
+@use './_top_navbar.scss';
+@use './_sidebar.scss';
+@use './_dialog_custom_range.scss';
+@use './_dialog_24hs_from.scss';
 
 #bottomContainer h2 { margin-bottom: 5px; }
 #version {
@@ -19,7 +19,7 @@ body.modal-open {
 
 .modal-container .modal-dialog {
 	margin-top: 5rem;
-	@include lessThanMedium {
+	@include size.lessThanMedium {
 		margin-top: 8rem;
 	}
 }
