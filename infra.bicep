@@ -1,24 +1,26 @@
 
 param location      string = resourceGroup().location
-param appName       string
+param webAppName string = uniqueString(resourceGroup().id)
 param skuName       string = 'F1'
 param uploadToken   string
+param linuxFxVersion string = 'node|22-lts'
 
 resource plan 'Microsoft.Web/serverfarms@2022-03-01' = {
-  name: '${appName}-plan'
+  name: '${webAppName}-plan'
   location: location
   sku: { name: skuName }
   kind: 'linux'
 }
 
 resource webApp 'Microsoft.Web/sites@2022-03-01' = {
-  name: appName
+  name: webAppName
   location: location
   kind: 'app,linux'
   properties: {
     serverFarmId: plan.id
     siteConfig: {
-      linuxFxVersion: 'NODE|22-lts'
+      linuxFxVersion: linuxFxVersion
+      appCommandLine: 'node app.js -t $(UPLOAD_TOKEN)'
       appSettings: [
         { name: 'UPLOAD_TOKEN', value: uploadToken }
       ]
