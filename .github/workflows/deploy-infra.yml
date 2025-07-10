@@ -29,6 +29,6 @@ jobs:
             az deployment group create \
               --resource-group ${{ secrets.AZURE_RESOURCE_GROUP }} \
               --template-file infra.bicep \
-              --parameters appName=${{ github.event.inputs.appName }} uploadToken=${{ github.event.inputs.uploadToken }}
+              --parameters webAppName=${{ github.event.inputs.appName }} uploadToken=${{ github.event.inputs.uploadToken }}
         env:
           AZURE_CLI_DEBUG: true
