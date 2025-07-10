@@ -41,10 +41,10 @@ I = null;
 function J(a) {
 	let b = N;
 	b.source_map.enable && b.source_map.js && (I = require('convert-source-map')),
-	b.sass.enable && (B = require('node-sass')),
+	b.sass.enable && (B = require('sass')),
 	b.less.enable && console.log('LESS is TODO...'),
 	b.autoprefixer.enable && (C = require('autoprefixer')),
-	b.babel.enable && (A = require('babel-core')),
+	b.babel.enable && (A = require('@babel/core')),
 	b.html_minifier.enable && (E = require('html-minifier')),
 	b.ejs.enable && (y = require('ejs')),
 	b.ejs_template_tags.enable && (D = require('cheerio')),
@@ -116,9 +116,15 @@ function V(a = x) {
 }
 function W(a) {return { basedir: M.src, filename: j(a) };}
 function X() {
-	let a = u("load ejs variables");return (
-		P = w(M.processor.ejs_variables.files), P ? (
-		a.done(), !0) : (a.fail(`load ejs variable failed (invalid yaml)`), !1));
+	let a = u("load ejs variables");
+	P = w(M.processor.ejs_variables.files);
+	if (P) {
+		a.done();
+		return true;
+	} else {
+		a.fail(`load ejs variable failed (invalid yaml)`);
+		return false;
+	}
 }
 function Y(a) {return (
 		v(a) ?
@@ -143,7 +149,7 @@ function Z(a) {
 				catch (a) {return b({ path: d, err: a });}
 			q(`${M.dist}/${a}`, e),
 			b(null, !0);
-		}let d = h(M.src, a);return v(a) && N.pug.enable ? c(null, z.compileFile(d, W(d))(P)) : N.ejs.enable ? y.renderFile(d, P, { root: M.src }, c) : void p(d, c);
+		}let d = h(M.src, a);console.log("P: ", P);return v(a) && N.pug.enable ? c(null, z.compileFile(d, W(d))(P)) : N.ejs.enable ? y.renderFile(d, P, { root: M.src }, c) : void p(d, c);
 	}, (c) => {
 		c ? b.fail(c.err, c.path) : b.done(),
 		a && a(c);
@@ -243,30 +249,29 @@ function ha(a, b, c, e) {
 	let g = j(a),
 	h = N.source_map.enable && N.source_map.css,
 	i = `${b}.map`;
-	B.render({
-		file: a,
-		indentedSyntax: c,
-		outputStyle: 'compressed',
-		outFile: b,
-		sourceMap: h ? i : void 0 },
-	(a, c) => a ? (
-	console.error(`  error: sass compile ${g}`.red, '\n', a), e()) : void
-	f(C ? [C] : []).process(c.css, {
-		from: g,
-		to: j(b),
-		map: h ? { inline: !1, prev: JSON.parse(c.map.toString()) } : void 0 }).
-	then((a) => {
-		let c = a.warnings();
-		0 < c.length && (
-		console.log(`warn: auto prefixer ${g}`.yellow.bold),
-		c.forEach((a) => console.log(`  ${a.toString()}`.yellow))),
-		q(b, a.css),
-		h && d.writeFileSync(i, JSON.stringify(a.map, null, '\t')),
-		e();
-	}).catch((a) => {
-		r(`auto prefixer ${g}`, a),
-		e();
-	}));
+	try {
+		const result = B.compile(a, {
+			sourceMap: h,
+		});
+		f(C ? [C] : []).process(result.css, {
+			from: g,
+			to: j(b),
+			map: h ? { inline: !1, prev: result.sourceMap } : void 0
+		}).then((a) => {
+			let c = a.warnings();
+			0 < c.length && (
+				console.log(`warn: auto prefixer ${g}`.yellow.bold),
+				c.forEach((a) => console.log(`  ${a.toString()}`.yellow))),
+				q(b, a.css),
+				h && d.writeFileSync(i, JSON.stringify(a.map, null, '\t')),
+				e();
+		}).catch((a) => {
+			r(`auto prefixer ${g}`, a),
+				e();
+		});
+	} catch (a) {
+		console.error(`  error: sass compile ${g}`.red, '\n', a), e();
+	}
 }
 function ia(a = '') {return (
 		a.endsWith('.jsx') ? a.replace(/\.jsx$/, '.js') :

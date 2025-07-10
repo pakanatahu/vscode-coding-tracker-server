@@ -37,7 +37,7 @@ function h(a) {
 }
 function i(a) {
 	let b = {};
-	return (a || []).map((a) => {try {let c = d.safeLoad(j(a) + '');b = Object.assign(b, c);} catch (a) {return null;}}), b;
+	return (a || []).map((a) => {try {let c = d.load(j(a) + '');b = Object.assign(b, c);} catch (a) {return null;}}), b;
 }
 function j(a, b = null) {
 	return b ? c.readFile(a, 'utf8', b) : c.readFileSync(a, 'utf8');
