@@ -15,32 +15,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          repository: YOUR_GITHUB_USERNAME/vscode-coding-tracker-server # Checkout your forked server repository
-          path: server-code
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
-
-      - name: Install jq
-        run: sudo apt-get update && sudo apt-get install -y jq
-
-      - name: Remove node-sass dependency
-        run: |
-          jq 'del(.dependencies."node-sass") | del(.devDependencies."node-sass")' package.json > package.json.tmp && mv package.json.tmp package.json
-        working-directory: server-code
+          node-version: '22.x'
 
       - name: Install Dependencies
-        run: |
-          npm install --omit=dev
-        working-directory: server-code
+        run: npm install
 
-      # - name: Test Server (Optional)
-      #   run: |
-      #     npm run test
-      #   working-directory: server-code
+      - name: Build
+        run: npm run build
 
       - name: Azure Login
         uses: azure/login@v1
@@ -50,5 +35,5 @@ jobs:
       - name: Deploy to App Service
         uses: azure/webapps-deploy@v2
         with:
-          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
-          package: server-code
+          app-name: ${{ github.event.inputs.appName }}
+          package: .
