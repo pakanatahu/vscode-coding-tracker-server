@@ -1,6 +1,7 @@
 # ignore local token file
 token.json
 
+.vscode/*
 # ignore frontend source map files
 frontend/dist/**/*.map
 
@@ -11,6 +12,9 @@ utilities/*.out
 
 # ignore local test database
 /database
+
+# ignore migration directory
+migration/
 
 # ignore unit test assets
 test/temp
@@ -84,3 +88,4 @@ typings/
 .env
 
 log
+.vscode/settings.json

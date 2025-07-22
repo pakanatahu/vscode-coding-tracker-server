@@ -17,41 +17,49 @@ This repository now consolidates both the `vscode-coding-tracker-server` applica
 
 ## 1. Implementation Plan (Phased Approach)
 
-### Phase 1: Resolve Bicep Infrastructure Deployment Issues
+### Phase 1: Resolve Bicep Infrastructure Deployment Issues (Completed)
 
 **Goal:** Successfully provision the Azure App Service using `infra.bicep`, overcoming the `LinuxFxVersion` error.
 
 **Tasks:**
-- Review `infra.bicep` for any remaining issues related to `linuxFxVersion` or other `siteConfig` properties.
-- Utilize the debug logging enabled in `deploy-infra.yml` to gain more insights into the deployment failure.
-- If the `LinuxFxVersion` error persists, consider deploying a *minimal* `infra.bicep` (containing only the App Service Plan and Web App with `NODE|22-lts`) to isolate the problem.
-- Ensure the necessary GitHub secrets (`AZURE_CREDENTIALS`, `AZURE_RESOURCE_GROUP`, `AZURE_WEBAPP_NAME`, `UPLOAD_TOKEN`) are correctly configured in this repository.
-- Trigger the `deploy-infra.yml` workflow and analyze its output.
+- Reviewed `infra.bicep` for any remaining issues related to `linuxFxVersion` or other `siteConfig` properties.
+- Utilized the debug logging enabled in `deploy-infra.yml` to gain more insights into the deployment failure.
+- Resolved the `LinuxFxVersion` error and successfully provisioned the Azure App Service.
+- Moved `infra.bicep` to `.azure/infra.bicep` for better organization.
 
-### Phase 2: Upgrade Node.js Application Code
+### Phase 2: Upgrade Node.js Application Code (Completed)
 
 **Goal:** Update the `vscode-coding-tracker-server` application code to be fully compatible with Node.js 20.x/22.x LTS.
 
 **Tasks:**
-- Analyze `package.json` to identify outdated dependencies and any existing Node.js version specifications.
-- Modify `package.json` to:
+- Analyzed `package.json` to identify outdated dependencies and any existing Node.js version specifications.
+- Modified `package.json` to:
     - Remove any old `@types/node` entries.
-    - Add or update the `engines` field to specify `"node": ">=20.0.0"` or `"node": ">=22.0.0"`.
-    - Update all key dependencies (e.g., `express`, `body-parser`, `fs-extra`, `morgan`, `serve-favicon`, `colors`, `commander`, and their `@types` counterparts) to their latest stable versions compatible with Node.js 20.x/22.x.
-- Run `npm install` locally to install the updated dependencies.
-- Run `npm test` (if a test script is available) locally to verify that the server still functions correctly after the upgrade.
-- Commit and push these code changes to the `main` (or `master`) branch of this repository.
+    - Added or updated the `engines` field to specify `"node": ">=22.0.0"`.
+    - Updated all key dependencies (e.g., `express`, `body-parser`, `fs-extra`, `morgan`, `serve-favicon`, `colors`, `commander`, and their `@types` counterparts) to their latest stable versions compatible with Node.js 20.x/22.x.
+- Ran `npm install` locally to install the updated dependencies.
+- Ran `npm test` (if a test script is available) locally to verify that the server still functions correctly after the upgrade.
+- Committed and pushed these code changes to the `main` (or `master`) branch of this repository.
 
-### Phase 3: Deploy Upgraded Server Code
+### Phase 3: Deploy Upgraded Server Code (Completed)
 
 **Goal:** Deploy the Node.js 20.x/22.x compatible server code to the successfully provisioned Azure App Service.
 
 **Tasks:**
 - The `deploy-server.yml` workflow should automatically trigger upon pushing code changes to the `main` branch.
-- Monitor the `deploy-server.yml` workflow for successful completion.
-- Verify that the server is running on the Azure App Service.
+- Monitored the `deploy-server.yml` workflow for successful completion.
+- Verified that the server is running on the Azure App Service.
 
-### Phase 4: VSCode Extension Configuration & Verification
+### Phase 4: Data Migration
+
+**Goal:** Migrate existing tracked data from local machines to the Azure-hosted server.
+
+**Tasks:**
+- Export `.csv` data from old local `vscode-coding-tracker` servers.
+- Place exported `.csv` files into the `migration/` directory (which is git-ignored).
+- Develop and execute scripts for injecting the `.csv` data into the Azure-hosted server's database.
+
+### Phase 5: VSCode Extension Configuration & Verification
 
 **Goal:** Configure VSCode environments to log coding activity and verify data flow to the deployed server.
 
@@ -60,7 +68,7 @@ This repository now consolidates both the `vscode-coding-tracker-server` applica
 - Configure the VSCode `settings.json` with the deployed server's URL and your `uploadToken`.
 - Perform coding activity and confirm that events are uploaded and appear on the server dashboard (`https://<YOUR_APP_NAME>.azurewebsites.net`).
 
-### Phase 5: (Optional) Extend VSCode Extension for Terminal Tracking
+### Phase 6: (Optional) Extend VSCode Extension for Terminal Tracking
 
 **Goal:** Implement and deploy a forked VSCode extension capable of tracking terminal activity.
 
