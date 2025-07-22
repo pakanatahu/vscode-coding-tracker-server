@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.24.7",
+    "node-fetch": "^3.3.2",
     "@babel/eslint-parser": "^7.19.0",
     "@babel/preset-env": "^7.28.0",
     "@hangxingliu/assert": "^0.1.1",

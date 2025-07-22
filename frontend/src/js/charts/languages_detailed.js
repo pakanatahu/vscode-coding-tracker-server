@@ -8,7 +8,17 @@ let {
 	echarts = require('../utils/echartsUtils'),
 	dateTime = require('../utils/datetime');
 
-const COLORS = ['#a5d6a7', '#80cbc4', '#90caf9', '#80deea', '#ef9a9a', '#ffcc80', '#bcaaa4'];
+const COLORS = [
+	'#a5d6a7', // green
+	'#80cbc4', // teal
+	'#90caf9', // blue
+	'#80deea', // cyan
+	'#ef9a9a', // red
+	'#ffcc80', // orange
+	'#bcaaa4', // brown
+	'#ffd600', // Terminal (yellow)
+	'#7c4dff'  // AI Chat (purple)
+];
 const COLOR_OTHER = '#b0bec5';
 
 function getColors(range) {

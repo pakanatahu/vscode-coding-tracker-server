@@ -68,11 +68,11 @@ type time long lang file proj pcid vcs line char reserved1 reserved2
 
 Description:
 
-- type: `int`  record type:  0:open(default) | 2:code | 1:look(reserved) 
+- type: `int`  record type:  0:open(default) | 2:code | 1:look(reserved) | 3:terminal | 4:chat (NEW, v4.1+)
 - time: `int`  record happened timestamp
 - long: `int`  record duration times (unit:second)
-- lang: `string` language
-- file: `string` file path (relative workspace root path)
+- lang: `string` language or activity type. For terminal activity, use `terminal`. For chat activity, use `chat`.
+- file: `string` file path (relative workspace root path) or terminal command (for terminal activity) or chat session id (for chat activity)
 - proj: `string` project path(workspace)
 - pcid: `string` computer id
 - vcs: `string` vcs(version control system) information
@@ -80,10 +80,33 @@ Description:
 		1. `::`: no vcs
 		2: `vcsName::branchName`: using vcs which be called `vcsName`. and root path in vcs is same with workspace root path. current branch is `branchName`
 		3: `vcsName:vcsRootPath:branchName`: using vcs which be called `vcsName`. and root path in vcs is `vcsRootPath`. current branch is `branchName` 
-- line: `int` line counts
-- char: `int` character counts
-- reserved1(**optional**): `string` reserved field 1, default value: 0
-- reserved2(**optional**): `string` reserved field 2, default value: 0
+- line: `int` line counts (for terminal/chat, set to 0)
+- char: `int` character counts (for terminal/chat, set to 0)
+- reserved1(**optional**): 
+    - For terminal: `cwd` (current working directory)
+    - For chat: `r1` (session id or prompt id)
+    - For file activity: reserved, default value: 0
+- reserved2(**optional**): 
+    - For terminal: 0
+    - For chat: `r2` (promptChars,responseChars) e.g. "123,456"
+    - For file activity: reserved, default value: 0
+
+#### Special activity types
+
+- **Terminal activity**:  
+  - `type=3`, `lang=terminal`, `file` is the command, `reserved1` is cwd, `reserved2` is 0.
+  - Example:  
+    ```
+    3 1721500000000 1000 terminal echo testproj testpc vcs:main 0 0 /home/user 0
+    ```
+
+- **Chat activity**:  
+  - `type=4`, `lang=chat`, `file` is session id, `reserved1` is r1 (prompt id), `reserved2` is r2 (promptChars,responseChars).
+  - Example:  
+    ```
+    4 1721500001000 2000 chat chatid testproj testpc vcs:main 0 0 abc 123,456
+    ```
+  - **Legacy:** Some older records may use `type=2` and `lang=chat` for chat activity. New records should use `type=4`.
 
 ## Valid Example Database File
 
@@ -123,4 +146,3 @@ d 5 mdjs.js
 2 1488561923500 45000 $4 $5 $1 $3 $2 50 0 0 0
 0 1488562174377 7514 html demo.html $1 $3 git::gh-pages 100 0 0 0
 ```
-

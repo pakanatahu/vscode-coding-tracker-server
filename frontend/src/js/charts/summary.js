@@ -46,6 +46,31 @@ function update(dataGroupByDate) {
 			.setValues(array.map(it => it.coding))
 			.toObject()
 	];
+
+	// Add Terminal and AI Chat as extra lines if present in the data
+	if (array.length && array[0].hasOwnProperty('Terminal')) {
+		series.push(
+			echarts.createSeries('line', 'Terminal')
+				.setLineSmooth()
+				.setLineColor('#ffd600')
+				.setItemColor('#ffd600')
+				.setAreaColor('#fff9c4')
+				.setValues(array.map(it => it.Terminal || 0))
+				.toObject()
+		);
+	}
+	if (array.length && array[0].hasOwnProperty('AI Chat')) {
+		series.push(
+			echarts.createSeries('line', 'AI Chat')
+				.setLineSmooth()
+				.setLineColor('#7c4dff')
+				.setItemColor('#7c4dff')
+				.setAreaColor('#ede7f6')
+				.setValues(array.map(it => it['AI Chat'] || 0))
+				.toObject()
+		);
+	}
+
 	//Remove max point and average line if no any data
 	if (maxDuration <= 0) {
 		series[0].markPoint.data = [];

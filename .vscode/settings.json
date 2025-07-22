@@ -2,7 +2,8 @@
 	"codingTracker.serverURL": "https://app-vscode-coding-tracker.azurewebsites.net",
 	"codingTracker.uploadToken": "55988b492c4cd09d82bd27a4aed36d05",
 	"codingTracker.computerId": "Davido-Laptop",
-
+	"codingTracker.shouldTrackTerminal": true,
+	"codingTracker.shouldTrackAIChat": true,
 	"files.exclude": {
 		"**/.git": true,
 		"**/.svn": true,

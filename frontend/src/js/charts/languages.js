@@ -8,8 +8,21 @@ let {
 	echarts = require('../utils/echartsUtils'),
 	dateTime = require('../utils/datetime');
 
-const COLORS = ['#a5d6a7', '#80cbc4', '#90caf9', '#80deea', '#ef9a9a', '#ffcc80', '#bcaaa4', '#b0bec5'];
-const COLORS_OTHER = ['#a5d6a7', '#80cbc4', '#90caf9', '#80deea', '#ef9a9a', '#d6d6d6'];
+const COLORS = [
+	'#a5d6a7', // green
+	'#80cbc4', // teal
+	'#90caf9', // blue
+	'#80deea', // cyan
+	'#ef9a9a', // red
+	'#ffcc80', // orange
+	'#bcaaa4', // brown
+	'#b0bec5', // grey
+	'#ffd600', // Terminal (yellow)
+	'#7c4dff'  // AI Chat (purple)
+];
+const COLORS_OTHER = [
+	'#a5d6a7', '#80cbc4', '#90caf9', '#80deea', '#ef9a9a', '#d6d6d6', '#ffd600', '#7c4dff'
+];
 
 let otherLanguages = '';
 function tooltipFormatter(p, ticket, set) {

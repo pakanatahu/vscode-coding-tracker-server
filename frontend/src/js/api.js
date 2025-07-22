@@ -10,6 +10,7 @@ let URL = {
 	overview: () => getBaseURL('overview', getFilter()),
 	languages: () => getBaseURL('languages', getFilter()),
 	vcs: () => getBaseURL('vcs', getFilter()),
+	terminal: () => getBaseURL('terminal', getFilter()),
 	project: proj => getBaseURL('project', getFilter()) + '&project=' + encodeURIComponent(proj),
 
 	hours: (startDate, endDate) => getGroupByHoursURL('hours', startDate, endDate),

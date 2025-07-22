@@ -14,6 +14,7 @@ function App() {
 		require('./routes/projects'),
 		require('./routes/languages'),
 		require('./routes/vcs'),
+		require('./routes/terminal'),
 
 		// open special sub-page following hash(#xxx) in URL, and "overview" sub-page by default
 	]).followRouterInURL('overview');

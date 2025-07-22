@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 0.7.0 (2025/07/22)
+
+- Add support for "terminal" and "chat" activity types in validation, analytics, and reporting.
+- Analytics middleware and report JSON now map type='terminal' to "Terminal" and type='chat' to "AI Chat".
+- Chat activities now parse r2 into prompt/response char counts and surface them as charStats in analytics output.
+- Frontend charts and summary tables now include "Terminal" and "AI Chat" with new colors.
+- Documentation updated for STORAGE_SYNTAX_V4.md to describe terminal & chat schema.
+- Added unit tests and mock data for terminal & chat.
+- Version bump to 0.7.0.
+
 ### 0.6.1 (2018/xx/xx) **Developing on**
 
 1. add group by directory for files in project (**Working...**)

@@ -43,9 +43,14 @@ type AnalyzeResult = {
 		computer?: HasCodingWatchingObjectMap;
 		language?: HasCodingWatchingObjectMap;
 		vcs?: HasCodingWatchingObjectMap;
+		terminal?: HasCodingWatchingObjectMap;
 	}
 };
 
-type HasCodingWatchingObject = { coding: number; watching: number; }
+type HasCodingWatchingObject = {
+	coding: number;
+	watching: number;
+	charStats?: { prompt: number; response: number };
+}
 type HasNameAndTimeObject = { name: string; } & HasCodingWatchingObject;
 type HasCodingWatchingObjectMap = { [name: string]: HasCodingWatchingObject; };
